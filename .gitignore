@@ -1,0 +1,31 @@
+# Node
+node_modules/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# Data (REMOVE FROM GIT)
+backend-ai/data/
+*.csv
+*.json
+
+# ML Models (REMOVE FROM GIT)
+*.pkl
+*.faiss
+*.h5
+*.pt
+*.ckpt
+*.onnx
+
+# Cache / Build
+.cache/
+dist/
+build/
+
+# OS
+.DS_Store
