@@ -112,7 +112,7 @@ function ProfessionalLogin() {
                         />
                     </div>
 
-                    <button type="submit" className="auth-button" disabled={loading} style={{ background: 'var(--forest)' }}>
+                    <button type="submit" className="auth-button" disabled={loading} style={{ background: '#4F46E5', color: 'white' }}>
                         {loading ? 'Processing...' : isLogin ? 'Access Portal' : 'Register Portal'}
                     </button>
                     {error && <p className="auth-error" style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
