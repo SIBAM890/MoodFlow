@@ -25,7 +25,8 @@ function ProfessionalLogin() {
         if (isLogin) {
             const result = await login({ email: formData.email, password: formData.password });
             if (result.success) {
-                if (result.role === 'admin') navigate('/admin-dashboard');
+                if (result.role === 'superadmin') navigate('/platform-admin');
+                else if (result.role === 'admin') navigate('/university-dashboard');
                 else if (result.role === 'counselor') navigate('/counselor-dashboard');
                 else navigate('/dashboard'); // Fallback
             } else {
@@ -38,7 +39,8 @@ function ProfessionalLogin() {
                 // Auto login after signup
                 const loginResult = await login({ email: formData.email, password: formData.password });
                 if (loginResult.success) {
-                    if (loginResult.role === 'admin') navigate('/admin-dashboard');
+                    if (loginResult.role === 'superadmin') navigate('/platform-admin');
+                    else if (loginResult.role === 'admin') navigate('/university-dashboard');
                     else if (loginResult.role === 'counselor') navigate('/counselor-dashboard');
                     else navigate('/dashboard');
                 }
@@ -81,7 +83,8 @@ function ProfessionalLogin() {
                                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                                 >
                                     <option value="counselor">Psychiatrist / Counselor</option>
-                                    <option value="admin">University Admin / Head</option>
+                                    <option value="admin">University Head (Demo)</option>
+                                    <option value="superadmin">Platform Sysadmin (Demo)</option>
                                 </select>
                             </div>
                         </>

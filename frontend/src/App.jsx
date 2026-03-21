@@ -15,7 +15,8 @@ import GroundingExercise from './components/games/GroundingExercise';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ProfessionalLogin from './pages/ProfessionalLogin';
-import AdminDashboard from './pages/AdminDashboard';
+import PlatformAdminDashboard from './pages/PlatformAdminDashboard';
+import UniversityDashboard from './pages/UniversityDashboard';
 import CounselorDashboard from './pages/CounselorDashboard';
 
 import { AuthProvider } from './context/AuthContext';
@@ -36,7 +37,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/professional-login" element={<ProfessionalLogin />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/platform-admin" element={<PlatformAdminDashboard />} />
+          <Route path="/university-dashboard" element={<UniversityDashboard />} />
           <Route path="/counselor-dashboard" element={<CounselorDashboard />} />
         </Routes>
       </Router>
