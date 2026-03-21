@@ -1,9 +1,15 @@
 import pandas as pd
 import json
 import os
+BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
+RAW_PATH = os.path.join(BASE_DIR, 'data', 'raw')
+SAVE_DIR = os.path.join(BASE_DIR, 'data', 'processed')
+SAVE_PATH = os.path.join(SAVE_DIR, 'final_training_data.csv')
 
-RAW_PATH = 'data/raw/'
-SAVE_PATH = 'data/processed/final_training_data.csv'
+os.makedirs(RAW_PATH, exist_ok=True)
+os.makedirs(SAVE_DIR, exist_ok=True)
+
+
 
 def preprocess_data():
     all_data = []
@@ -53,6 +59,10 @@ def preprocess_data():
                 elif isinstance(data, list) and 'input' in data[0]:
                     tmp = pd.DataFrame(data).rename(columns={'input': 'instruction', 'output': 'response'})
                     all_data.append(tmp[['instruction', 'response']])
+
+    if not all_data:
+        print(f"⚠️ No valid CSV/JSON data files found in {RAW_PATH} to process!")
+        return
 
     final_df = pd.concat(all_data, ignore_index=True).dropna().drop_duplicates()
     final_df.to_csv(SAVE_PATH, index=False)

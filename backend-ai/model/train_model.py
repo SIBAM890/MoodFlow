@@ -1,32 +1,52 @@
 import os, pandas as pd, pickle, numpy as np, faiss, time
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY"))
+BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
+MODEL_DIR = os.path.join(BASE_DIR, 'model', 'saved_models')
+DATA_PATH = os.path.join(BASE_DIR, 'data', 'processed', 'final_training_data.csv')
+
+MODEL_PATH = os.path.join(MODEL_DIR, 'brain_metadata.pkl')
+FAISS_INDEX_PATH = os.path.join(MODEL_DIR, 'brain_index.faiss')
+os.makedirs(MODEL_DIR, exist_ok=True)
+
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY"))
 
 EMBED_MODEL = "models/text-embedding-004" 
-MODEL_PATH = 'model/saved_models/brain_metadata.pkl'
-FAISS_INDEX_PATH = 'model/saved_models/brain_index.faiss'
 BATCH_SIZE = 128  
 THREADS = 12 # Bumped for your Mac M-series chip
 
 def get_embeddings(batch_data):
     texts, pbar = batch_data
     try:
-        response = genai.embed_content(
+        response = client.models.embed_content(
             model=EMBED_MODEL,
-            content=texts,
-            task_type="retrieval_document"
+            contents=texts,
+            config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT"),
         )
         pbar.update(len(texts))
-        return response['embedding']
-    except:
+        return [e.values for e in response.embeddings]
+    except Exception as e:
+        print(f"Embedding error: {e}")
         return [[0.0] * 768] * len(texts)
 
 def train_semantic_model():
     print(f"🚀 FIXING AND FINISHING BRAIN...")
-    df = pd.read_csv('data/processed/final_training_data.csv').dropna().reset_index(drop=True)
+    
+    api_key = os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY")
+    if not api_key or api_key == "YOUR_GEMINI_API_KEY":
+        print("\n❌ CRITICAL ERROR: Invalid or missing GEMINI_API_KEY.")
+        print("Please set your Gemini API key as an environment variable before training:\n")
+        print("  Windows Command Prompt: set GEMINI_API_KEY=AIzaSy...")
+        print("  Windows PowerShell:     $env:GEMINI_API_KEY=\"AIzaSy...\"\n")
+        return
+    try:
+        df = pd.read_csv(DATA_PATH).dropna().reset_index(drop=True)
+    except FileNotFoundError:
+        print(f"Missing data at {DATA_PATH}. Run preprocess.py first or add data.")
+        return
     texts = df['instruction'].tolist()
     
     batches = [texts[i:i + BATCH_SIZE] for i in range(0, len(texts), BATCH_SIZE)]
@@ -49,7 +69,7 @@ def train_semantic_model():
     index.add(embeddings_np)
     # -------------------------
     
-    os.makedirs('model/saved_models', exist_ok=True)
+    
     faiss.write_index(index, FAISS_INDEX_PATH)
     with open(MODEL_PATH, 'wb') as f:
         pickle.dump({'df': df}, f)

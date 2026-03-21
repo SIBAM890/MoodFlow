@@ -2,18 +2,25 @@ import faiss
 import pickle
 import numpy as np
 import os
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 # Configuration
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY"))
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY"))
 LLM_MODEL = "gemini-2.5-flash"
-EMBED_MODEL = "models/text-embedding-004" 
+EMBED_MODEL = "models/text-embedding-004"
 
 # Load the FAISS brain
-index = faiss.read_index('model/saved_models/brain_index.faiss')
-with open('model/saved_models/brain_metadata.pkl', 'rb') as f:
-    brain_data = pickle.load(f)
-df = brain_data['df']
+BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
+try:
+    index = faiss.read_index(os.path.join(BASE_DIR, 'model', 'saved_models', 'brain_index.faiss'))
+    with open(os.path.join(BASE_DIR, 'model', 'saved_models', 'brain_metadata.pkl'), 'rb') as f:
+        brain_data = pickle.load(f)
+    df = brain_data['df']
+except Exception as e:
+    print(f"Warning: Could not load FAISS brain. {e}")
+    index = None
+    df = None
 
 def detect_crisis(text):
     """Checks for high-risk keywords in user input"""
@@ -41,12 +48,12 @@ def get_response(user_input):
     
     # 2. Semantic Search (Priority 2)
     try:
-        res = genai.embed_content(
+        res = client.models.embed_content(
             model=EMBED_MODEL,
-            content=[user_input],
-            task_type="retrieval_query"
+            contents=[user_input],
+            config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY"),
         )
-        query_vec = np.array(res['embedding']).astype('float32')
+        query_vec = np.array(res.embeddings[0].values).astype('float32')
         faiss.normalize_L2(query_vec)
         _, indices = index.search(query_vec, k=1)
         best_match = df.iloc[indices[0][0]]['response']
@@ -67,11 +74,14 @@ def get_response(user_input):
              f"Companion:"
     
     try:
-        model = genai.GenerativeModel(
-            model_name=LLM_MODEL,
-            generation_config={"temperature": 0.7, "max_output_tokens": 250}
+        response = client.models.generate_content(
+            model=LLM_MODEL,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                temperature=0.7,
+                max_output_tokens=250,
+            )
         )
-        response = model.generate_content(prompt)
         bot_msg = response.text.strip()
     except Exception:
         bot_msg = "I'm right here with you, Spandan. I might be having a technical glitch, but I'm listening."
