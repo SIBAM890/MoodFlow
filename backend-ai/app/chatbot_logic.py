@@ -57,19 +57,22 @@ def get_response(user_input):
     # 1. CRISIS CHECK (Priority 1)
     is_crisis = detect_crisis(user_input)
     
-    # 2. Semantic Search (Priority 2)
-    try:
-        res = client.models.embed_content(
-            model=EMBED_MODEL,
-            contents=[user_input],
-            config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY", output_dimensionality=768),
-        )
-        query_vec = np.array(res.embeddings[0].values).astype('float32')
-        faiss.normalize_L2(query_vec)
-        _, indices = index.search(query_vec, k=1)
-        best_match = df.iloc[indices[0][0]]['response']
-    except Exception:
-        best_match = "I'm here for you, Spandan. Tell me what's on your mind."
+    # 2. Semantic Search (RAG Pipeline)
+    best_match = "I'm here for you, Spandan. Tell me what's on your mind. Provide a warm, supportive, and understanding response."
+    
+    if index is not None and df is not None:
+        try:
+            res = client.models.embed_content(
+                model=EMBED_MODEL,
+                contents=[user_input],
+                config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY", output_dimensionality=768),
+            )
+            query_vec = np.array(res.embeddings[0].values).astype('float32')
+            faiss.normalize_L2(query_vec)
+            _, indices = index.search(query_vec, k=1)
+            best_match = df.iloc[indices[0][0]]['response']
+        except Exception as e:
+            print(f"RAG Retrieval Error: {e}")
 
 
     # 3. Gemini Personality & Response Generation

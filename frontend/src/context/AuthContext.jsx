@@ -39,8 +39,9 @@ export const AuthProvider = ({ children }) => {
                 // Update local and global state
                 setUser(loggedInUser);
                 localStorage.setItem('user', JSON.stringify(loggedInUser));
+                localStorage.setItem('user_role', loggedInUser.role);
                 
-                return { success: true };
+                return { success: true, role: loggedInUser.role };
             }
             return { success: false, error: 'Login failed: No token received' };
         } catch (error) {

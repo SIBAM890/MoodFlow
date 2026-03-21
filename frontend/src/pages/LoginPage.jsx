@@ -17,7 +17,13 @@ function LoginPage() {
 
         const result = await login(formData);
         if (result.success) {
-            navigate('/dashboard');
+            if (result.role === 'admin') {
+                navigate('/admin-dashboard');
+            } else if (result.role === 'counselor') {
+                navigate('/counselor-dashboard');
+            } else {
+                navigate('/dashboard'); // Student default
+            }
         } else {
             setError(result.error);
         }
