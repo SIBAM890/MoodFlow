@@ -30,7 +30,7 @@ function DashboardLayout({ children, rightPanel, user, activeNav, onNavChange })
                         letterSpacing: '-0.5px',
                         color: 'var(--text-primary)' 
                     }}>
-                        Hea<span style={{ color: 'var(--indigo-600)' }}>lio</span>
+                        Mood<span style={{ color: 'var(--indigo-600)' }}>Flow</span>
                     </span>
                 </Link>
                 

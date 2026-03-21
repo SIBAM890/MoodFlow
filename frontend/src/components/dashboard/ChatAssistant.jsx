@@ -11,7 +11,7 @@ function ChatAssistant() {
     const [messages, setMessages] = useState([
         {
             id: 1,
-            text: "Hi Spandan! ✨ I'm Petal. How are you feeling right now?",
+            text: "Hi Spandan! ✨ I'm AutoFlow. How are you feeling right now?",
             sender: 'ai',
             timestamp: new Date()
         }
@@ -62,7 +62,7 @@ function ChatAssistant() {
             
             const errorMsg = {
                 id: Date.now() + 1,
-                text: "I'm having a little trouble connecting to my brain. Please ensure Ollama and the Flask server are running!",
+                text: "I'm having a little trouble connecting to my brain. Please ensure the FastAPI backend is running and your Gemini API key is valid!",
                 sender: 'ai',
                 timestamp: new Date()
             };
@@ -129,7 +129,7 @@ function ChatAssistant() {
                     type="text"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Message Petal..."
+                    placeholder="Message AutoFlow..."
                     style={{ flex: 1, padding: '10px 15px', borderRadius: '20px', border: '1px solid var(--border-medium)', outline: 'none' }}
                 />
                 <button type="submit" disabled={!inputText.trim() || isTyping} style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--indigo-600)', border: 'none', color: 'white', cursor: 'pointer' }}>
