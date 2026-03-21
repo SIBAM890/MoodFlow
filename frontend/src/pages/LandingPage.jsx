@@ -183,6 +183,7 @@ function LandingPage() {
                     <a href="#testimonials">Stories</a>
                 </div>
                 <div className="nav-actions">
+                    <Link to="/professional-login" className="nav-login" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Staff Portal</Link>
                     <Link to="/login" className="nav-login">Login</Link>
                     <button className="nav-cta" onClick={handleStart}>Start Your Journey</button>
                 </div>
