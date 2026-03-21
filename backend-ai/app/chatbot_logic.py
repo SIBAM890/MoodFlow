@@ -90,11 +90,7 @@ def get_response(user_input):
     try:
         response = client.models.generate_content(
             model=LLM_MODEL,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=0.7,
-                max_output_tokens=250,
-            )
+            contents=prompt
         )
         bot_msg = response.text.strip()
     except Exception:

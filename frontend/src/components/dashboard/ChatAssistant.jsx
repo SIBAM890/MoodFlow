@@ -106,8 +106,8 @@ function ChatAssistant() {
                             maxWidth: '80%',
                             padding: '10px 14px',
                             borderRadius: msg.sender === 'user' ? '18px 18px 2px 18px' : '18px 18px 18px 2px',
-                            background: msg.sender === 'user' ? 'var(--indigo-600)' : 'white',
-                            color: msg.sender === 'user' ? 'white' : 'var(--text-primary)',
+                            background: msg.sender === 'user' ? '#4F46E5' : 'white',
+                            color: msg.sender === 'user' ? '#FFFFFF' : 'var(--text-primary)',
                             boxShadow: 'var(--shadow-sm)',
                             fontSize: '0.9rem'
                         }}>
@@ -132,7 +132,7 @@ function ChatAssistant() {
                     placeholder="Message AutoFlow..."
                     style={{ flex: 1, padding: '10px 15px', borderRadius: '20px', border: '1px solid var(--border-medium)', outline: 'none' }}
                 />
-                <button type="submit" disabled={!inputText.trim() || isTyping} style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--indigo-600)', border: 'none', color: 'white', cursor: 'pointer' }}>
+                <button type="submit" disabled={!inputText.trim() || isTyping} style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#4F46E5', border: 'none', color: 'white', cursor: 'pointer' }}>
                     <Send size={18} />
                 </button>
             </form>

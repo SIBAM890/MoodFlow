@@ -18,6 +18,8 @@ import Questionnaire from './Questionnaire'; // Integrated Questionnaire
 // Data and API
 import { mockMoodData, mockStressData, mockBurnoutData, mockCopingSuggestions } from '../../data/mockData';
 import { moodAPI, journalAPI } from '../../services/api';
+import { generateWellnessReport } from '../../utils/generateWellnessReport';
+import { FileDown } from 'lucide-react'; // Import Icon
 
 function MoodDashboard() {
     const navigate = useNavigate();
@@ -96,6 +98,20 @@ function MoodDashboard() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    {/* Wellness Report Download Button */}
+                    <button 
+                        onClick={() => generateWellnessReport(user)}
+                        style={{
+                            display: 'flex', alignItems: 'center', gap: '8px',
+                            background: 'white', color: 'var(--text-primary)',
+                            padding: '10px 20px', borderRadius: '25px',
+                            border: '1px solid var(--border-medium)', cursor: 'pointer', fontWeight: '600', transition: 'all 0.3s'
+                        }}
+                    >
+                        <FileDown size={18} color="var(--indigo-600)" />
+                        Clinical Report
+                    </button>
+
                     {/* Check-in Toggle Button */}
                     <button 
                         onClick={() => setActiveNav(activeNav === 'questionnaire' ? 'dashboard' : 'questionnaire')}
