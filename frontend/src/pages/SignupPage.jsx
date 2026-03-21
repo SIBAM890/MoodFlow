@@ -127,10 +127,17 @@ function SignupPage() {
                     </button>
                 </form>
 
-                <div className="auth-footer">
-                    <p>
-                        Already have an account?
-                        <Link to="/login" className="auth-link">Sign In</Link>
+                <div className="auth-footer" style={{ marginTop: '20px', borderTop: '1px solid var(--border-soft)', paddingTop: '20px' }}>
+                    <p style={{ marginBottom: '15px' }}>
+                        Are you a University Authority or Counselor?
+                        <br />
+                        <Link to="/professional-login" className="auth-button" style={{ display: 'block', marginTop: '10px', background: 'white', color: 'var(--indigo-600)', border: '1px solid var(--indigo-600)', textDecoration: 'none' }}>
+                            Register Staff Account
+                        </Link>
+                    </p>
+                    <p style={{ fontSize: '0.9rem' }}>
+                        Already have a student account?
+                        <Link to="/login" className="auth-link" style={{ marginLeft: '5px' }}>Sign In</Link>
                     </p>
                 </div>
             </div>

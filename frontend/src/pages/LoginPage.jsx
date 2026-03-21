@@ -76,10 +76,17 @@ function LoginPage() {
                     {error && <p className="auth-error" style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
                 </form>
 
-                <div className="auth-footer">
-                    <p>
-                        Don't have an account?
-                        <Link to="/signup" className="auth-link">Sign Up</Link>
+                <div className="auth-footer" style={{ marginTop: '20px', borderTop: '1px solid var(--border-soft)', paddingTop: '20px' }}>
+                    <p style={{ marginBottom: '15px' }}>
+                        Are you a University Authority or Counselor?
+                        <br />
+                        <Link to="/professional-login" className="auth-button" style={{ display: 'block', marginTop: '10px', background: 'white', color: 'var(--indigo-600)', border: '1px solid var(--indigo-600)', textDecoration: 'none' }}>
+                            Access Staff Portal
+                        </Link>
+                    </p>
+                    <p style={{ fontSize: '0.9rem' }}>
+                        Don't have a student account?
+                        <Link to="/signup" className="auth-link" style={{ marginLeft: '5px' }}>Sign Up</Link>
                     </p>
                 </div>
             </div>
