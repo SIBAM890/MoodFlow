@@ -57,4 +57,4 @@ async def analyze_endpoint(file: UploadFile = File(...)):
 
 @app.get("/")
 def health_check():
-    return {"status": "Mood Flow Voice Service Running"}
+    return {"status": "Mood Flow Voice Service is Running"}
