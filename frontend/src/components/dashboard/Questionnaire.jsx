@@ -97,7 +97,7 @@ const Questionnaire = ({ onComplete, onCancel }) => {
             const data = await response.json();
             return data.response;
         } catch (e) {
-            return "Healio is offline. Ensure Ollama is running (ollama run llama3).";
+            return "Mood Flow is offline. Ensure Ollama is running (ollama run llama3).";
         }
     };
 
@@ -186,7 +186,7 @@ const Questionnaire = ({ onComplete, onCancel }) => {
     if (loading) return (
         <div style={styles.loading}>
             <h2>Analyzing your digital mindset...</h2>
-            <p>Spandan, Healio AI is checking for behavioral patterns.</p>
+            <p>Spandan, Mood Flow AI is checking for behavioral patterns.</p>
         </div>
     );
 

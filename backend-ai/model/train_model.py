@@ -1,9 +1,11 @@
-import os, pandas as pd, pickle, requests, numpy as np, faiss, time
+import os, pandas as pd, pickle, numpy as np, faiss, time
+import google.generativeai as genai
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 
-OLLAMA_URL = "http://localhost:11434"
-EMBED_MODEL = "nomic-embed-text" 
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY"))
+
+EMBED_MODEL = "models/text-embedding-004" 
 MODEL_PATH = 'model/saved_models/brain_metadata.pkl'
 FAISS_INDEX_PATH = 'model/saved_models/brain_index.faiss'
 BATCH_SIZE = 128  
@@ -12,10 +14,13 @@ THREADS = 12 # Bumped for your Mac M-series chip
 def get_embeddings(batch_data):
     texts, pbar = batch_data
     try:
-        response = requests.post(f'{OLLAMA_URL}/api/embed', 
-                                 json={'model': EMBED_MODEL, 'input': texts}, timeout=60)
+        response = genai.embed_content(
+            model=EMBED_MODEL,
+            content=texts,
+            task_type="retrieval_document"
+        )
         pbar.update(len(texts))
-        return response.json()['embeddings']
+        return response['embedding']
     except:
         return [[0.0] * 768] * len(texts)
 

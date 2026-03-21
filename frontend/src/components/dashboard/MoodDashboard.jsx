@@ -87,7 +87,7 @@ function MoodDashboard() {
                     <h1 style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: 0 }}>
                         <Hand size={32} color="#4F46E5" />
                         {activeNav === 'questionnaire' ? 'Digital Mindset Analysis' : 
-                         activeNav === 'chat' ? 'Healio AI Companion' : 
+                         activeNav === 'chat' ? 'Mood Flow AI Companion' : 
                          `Good Day, ${user?.name || 'Spandan'}`}
                     </h1>
                     <p style={{ margin: '8px 0 0 0', color: 'var(--text-secondary)' }}>

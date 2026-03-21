@@ -107,7 +107,7 @@ function useCardSpreadAnimation() {
 
 // Data
 const testimonials = [
-    { text: "Healio helped me understand patterns I never noticed. It feels like having a gentle guide.", name: "Sarah", role: "Designer" },
+    { text: "Mood Flow helped me understand patterns I never noticed. It feels like having a gentle guide.", name: "Sarah", role: "Designer" },
     { text: "Finally, an app that feels warm and understanding. Not clinical, not childish—just right.", name: "Marcus", role: "Teacher" },
     { text: "The AI companion actually listens. It's become part of my daily wellness routine.", name: "Emily", role: "Writer" },
     { text: "Beautiful, calming, and genuinely helpful. This is what mental health apps should feel like.", name: "David", role: "Therapist" },
@@ -175,7 +175,7 @@ function LandingPage() {
             <nav className="nav">
                 <div className="nav-brand">
                     <span className="brand-icon">🌿</span>
-                    <span className="brand-name">Healio</span>
+                    <span className="brand-name">Mood Flow</span>
                 </div>
                 <div className="nav-links">
                     <a href="#features">Features</a>
@@ -400,7 +400,7 @@ function LandingPage() {
                 <div className="faq-list">
                     {[
                         { q: "Is my data private and secure?", a: "Absolutely. Your data is encrypted end-to-end. We never sell it, and you can delete everything anytime." },
-                        { q: "Is this a replacement for therapy?", a: "No—Healio is a supportive companion, not a substitute for professional care." },
+                        { q: "Is this a replacement for therapy?", a: "No—Mood Flow is a supportive companion, not a substitute for professional care." },
                         { q: "How much time does it take?", a: "A quick check-in takes 30 seconds. Journaling and AI chats are entirely on your schedule." },
                         { q: "Can I try it for free?", a: "Yes! We offer a 14-day free trial with full access. No credit card required." },
                     ].map((item, i) => (
@@ -435,7 +435,7 @@ function LandingPage() {
             <footer className="footer">
                 <div className="footer-main">
                     <div className="footer-brand">
-                        <span>🌿 Healio</span>
+                        <span>🌿 Mood Flow</span>
                         <p>Your gentle companion for emotional wellness.</p>
                     </div>
                     <div className="footer-links">
@@ -459,7 +459,7 @@ function LandingPage() {
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <span>© 2024 Healio. Made with 💚 for your wellbeing.</span>
+                    <span>© 2024 Mood Flow. Made with 💚 for your wellbeing.</span>
                 </div>
             </footer>
         </div >

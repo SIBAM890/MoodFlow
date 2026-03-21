@@ -54,7 +54,7 @@ function SignupPage() {
                 <div className="auth-header">
                     <span className="auth-logo">🌱</span>
                     <h1 className="auth-title">Create Account</h1>
-                    <p className="auth-subtitle">Join Healio and start your journey</p>
+                    <p className="auth-subtitle">Join Mood Flow and start your journey</p>
                 </div>
 
                 {error && <div className="auth-error-message">{error}</div>}

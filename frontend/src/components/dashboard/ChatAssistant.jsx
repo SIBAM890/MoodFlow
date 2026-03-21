@@ -1,6 +1,6 @@
 /**
  * ChatAssistant Component
- * "Healio" themed AI companion interface
+ * "Mood Flow" themed AI companion interface
  */
 import { useState, useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
@@ -89,7 +89,7 @@ function ChatAssistant() {
                 <div style={{ margin: '0 auto 8px auto', width: '50px', height: '50px' }}>
                     <PetalSpirit size={50} />
                 </div>
-                <h3 style={{ margin: 0, color: 'var(--text-primary)' }}>Healio Chat</h3>
+                <h3 style={{ margin: 0, color: 'var(--text-primary)' }}>Mood Flow Chat</h3>
                 <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)' }}>AI Wellness Companion</p>
             </div>
 

@@ -28,7 +28,7 @@ app = FastAPI(
     version="3.0.0",
     contact={
         "name": "MoodFlow Development Team",
-        "url": "https://github.com/shayannab/Healio"
+        "url": "https://github.com/shayannab/mood-flow"
     }
 )
 

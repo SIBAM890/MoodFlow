@@ -1,4 +1,4 @@
-# 🌿 Healio - AI-Powered Emotional Intelligence & Support
+# 🌿 Mood Flow - AI-Powered Emotional Intelligence & Support
 
 Empower your mental well-being with multimodal AI-driven insights, secure vocal biomarker analysis, and RAG-based empathetic support.
 
@@ -8,7 +8,7 @@ Try the Demo
 
 **Demo Credentials:**
 
-* **Email:** `demo@healio.com`
+* **Email:** `demo@moodflow.com`
 * **Password:** `demo123`
 👉 **Launch Demo**
 Pre-loaded with sample insights to explore the interactive Mood Journey and Journaling features.
@@ -70,8 +70,8 @@ Pre-loaded with sample insights to explore the interactive Mood Journey and Jour
 **1. Clone Repository**
 
 ```bash
-git clone https://github.com/yourusername/healio.git
-cd healio
+git clone https://github.com/yourusername/mood-flow.git
+cd mood-flow
 
 ```
 
@@ -102,7 +102,7 @@ python main.py # Port 8001
 **4. Frontend Setup**
 
 ```bash
-cd healio-web
+cd mood-flow-web
 npm install
 npm start
 
@@ -115,7 +115,7 @@ npm start
 **Backend (.env)**
 
 ```bash
-DATABASE_URL="sqlite:///./healio.db"
+DATABASE_URL="sqlite:///./moodflow.db"
 JWT_SECRET="your_secret_key"
 ALGORITHM="HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES=30
@@ -252,6 +252,6 @@ Spandan Kar**
 
 ⭐ Show Your Support
 
-If you find Healio useful, please consider giving it a ⭐ on GitHub!
+If you find Mood Flow useful, please consider giving it a ⭐ on GitHub!
 
 Built by "Sibam Prasad Sahoo" "Shayan Behera" "Spandan Kar"

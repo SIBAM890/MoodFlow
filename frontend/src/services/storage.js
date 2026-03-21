@@ -5,8 +5,8 @@
  */
 
 const STORAGE_KEYS = {
-    MOOD_LOGS: 'healio_mood_logs',
-    USER_PREFS: 'healio_user_prefs'
+    MOOD_LOGS: 'mood_flow_mood_logs',
+    USER_PREFS: 'mood_flow_user_prefs'
 };
 
 export const storageService = {

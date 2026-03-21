@@ -16,3 +16,4 @@ threadpoolctl
 # For any web interface (if needed)
 flask
 flask-cors
+google-generativeai

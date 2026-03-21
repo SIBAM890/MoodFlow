@@ -5,7 +5,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from service import analyze_audio_service
 
-app = FastAPI(title="Healio Voice Analysis Microservice")
+app = FastAPI(title="Mood Flow Voice Analysis Microservice")
 
 # CORS - Allow strict frontend origin later, broad for now
 app.add_middleware(
@@ -57,4 +57,4 @@ async def analyze_endpoint(file: UploadFile = File(...)):
 
 @app.get("/")
 def health_check():
-    return {"status": "Healio Voice Service Running"}
+    return {"status": "Mood Flow Voice Service Running"}

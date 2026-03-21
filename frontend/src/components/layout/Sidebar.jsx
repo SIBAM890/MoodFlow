@@ -58,7 +58,7 @@ function Sidebar({ user, activeNav, onNavChange }) {
     return (
         <aside className="sidebar">
             <div className="sidebar-logo">
-                <Link to="/" className="logo" style={{ textDecoration: 'none', color: 'inherit' }} aria-label="Go to landing page">Healio</Link>
+                <Link to="/" className="logo" style={{ textDecoration: 'none', color: 'inherit' }} aria-label="Go to landing page">Mood Flow</Link>
             </div>
 
             <nav>

@@ -1,12 +1,13 @@
 import faiss
 import pickle
 import numpy as np
-import requests
+import os
+import google.generativeai as genai
 
 # Configuration
-OLLAMA_URL = "http://localhost:11434"
-LLM_MODEL = "llama3"
-EMBED_MODEL = "nomic-embed-text" 
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY"))
+LLM_MODEL = "gemini-2.5-flash"
+EMBED_MODEL = "models/text-embedding-004" 
 
 # Load the FAISS brain
 index = faiss.read_index('model/saved_models/brain_index.faiss')
@@ -40,19 +41,20 @@ def get_response(user_input):
     
     # 2. Semantic Search (Priority 2)
     try:
-        res = requests.post(
-            f'{OLLAMA_URL}/api/embed', 
-            json={'model': EMBED_MODEL, 'input': [user_input]},
-            timeout=10
+        res = genai.embed_content(
+            model=EMBED_MODEL,
+            content=[user_input],
+            task_type="retrieval_query"
         )
-        query_vec = np.array(res.json()['embeddings']).astype('float32')
+        query_vec = np.array(res['embedding']).astype('float32')
         faiss.normalize_L2(query_vec)
         _, indices = index.search(query_vec, k=1)
         best_match = df.iloc[indices[0][0]]['response']
     except Exception:
         best_match = "I'm here for you, Spandan. Tell me what's on your mind."
 
-    # 3. Llama 3 Personality & Response Generation
+
+    # 3. Gemini Personality & Response Generation
     system_instruction = (
         "You are 'Mindful Companion', Spandan's empathetic AI. "
         "Your goal is to console him, validate his feelings, and provide motivation. "
@@ -65,17 +67,12 @@ def get_response(user_input):
              f"Companion:"
     
     try:
-        response = requests.post(
-            f'{OLLAMA_URL}/api/generate', 
-            json={
-                'model': LLM_MODEL, 
-                'prompt': prompt, 
-                'stream': False,
-                'options': {'temperature': 0.7, 'num_predict': 250}
-            },
-            timeout=40
+        model = genai.GenerativeModel(
+            model_name=LLM_MODEL,
+            generation_config={"temperature": 0.7, "max_output_tokens": 250}
         )
-        bot_msg = response.json()['response'].strip()
+        response = model.generate_content(prompt)
+        bot_msg = response.text.strip()
     except Exception:
         bot_msg = "I'm right here with you, Spandan. I might be having a technical glitch, but I'm listening."
 
