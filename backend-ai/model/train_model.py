@@ -1,4 +1,15 @@
 import os, pandas as pd, pickle, numpy as np, faiss, time
+
+# Safely load the .env variables natively
+try:
+    with open(os.path.join(os.path.dirname(__file__), '..', '.env'), 'r') as f:
+        for line in f:
+            if line.strip() and not line.startswith('#'):
+                k, v = line.strip().split('=', 1)
+                os.environ[k.strip()] = v.strip().strip('\"\'')
+except Exception:
+    pass
+
 from google import genai
 from google.genai import types
 from tqdm import tqdm
@@ -14,23 +25,28 @@ os.makedirs(MODEL_DIR, exist_ok=True)
 
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY"))
 
-EMBED_MODEL = "models/text-embedding-004" 
-BATCH_SIZE = 128  
-THREADS = 12 # Bumped for your Mac M-series chip
+EMBED_MODEL = "gemini-embedding-001" 
+BATCH_SIZE = 100  # Max permitted by Gemini API
+THREADS = 2 # Reduced to prevent instantly hitting Gemini free tier rate limits
 
 def get_embeddings(batch_data):
     texts, pbar = batch_data
-    try:
-        response = client.models.embed_content(
-            model=EMBED_MODEL,
-            contents=texts,
-            config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT"),
-        )
-        pbar.update(len(texts))
-        return [e.values for e in response.embeddings]
-    except Exception as e:
-        print(f"Embedding error: {e}")
-        return [[0.0] * 768] * len(texts)
+    retries = 10
+    for attempt in range(retries):
+        try:
+            response = client.models.embed_content(
+                model=EMBED_MODEL,
+                contents=texts,
+                config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT", output_dimensionality=768),
+            )
+            pbar.update(len(texts))
+            return [e.values for e in response.embeddings]
+        except Exception as e:
+            if "429" in str(e) or attempt < retries - 1:
+                time.sleep(25)  # Backoff for free-tier RPM limits
+            else:
+                print(f"\nEmbedding fatal error: {e}")
+                return [[0.0] * 768] * len(texts)
 
 def train_semantic_model():
     print(f"🚀 FIXING AND FINISHING BRAIN...")

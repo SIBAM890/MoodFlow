@@ -2,13 +2,24 @@ import faiss
 import pickle
 import numpy as np
 import os
+
+# Safely load the .env variables natively
+try:
+    with open(os.path.join(os.path.dirname(__file__), '..', '.env'), 'r') as f:
+        for line in f:
+            if line.strip() and not line.startswith('#'):
+                k, v = line.strip().split('=', 1)
+                os.environ[k.strip()] = v.strip().strip('\"\'')
+except Exception:
+    pass
+
 from google import genai
 from google.genai import types
 
 # Configuration
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY"))
 LLM_MODEL = "gemini-2.5-flash"
-EMBED_MODEL = "models/text-embedding-004"
+EMBED_MODEL = "gemini-embedding-001"
 
 # Load the FAISS brain
 BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
@@ -51,7 +62,7 @@ def get_response(user_input):
         res = client.models.embed_content(
             model=EMBED_MODEL,
             contents=[user_input],
-            config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY"),
+            config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY", output_dimensionality=768),
         )
         query_vec = np.array(res.embeddings[0].values).astype('float32')
         faiss.normalize_L2(query_vec)
