@@ -104,31 +104,31 @@ function ChatAssistant() {
                     position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
                     background: 'rgba(239, 68, 68, 0.95)', zIndex: 1000,
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                    color: 'white', padding: '30px', textAlign: 'center',
-                    backdropFilter: 'blur(5px)'
+                    color: 'white', padding: '20px', textAlign: 'center',
+                    backdropFilter: 'blur(5px)', boxSizing: 'border-box', overflowY: 'auto'
                 }}>
-                    <AlertTriangle size={64} color="white" style={{ marginBottom: '15px' }} />
-                    <h1 style={{ fontSize: '2.5rem', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: '2px' }}>Emergency Protocol</h1>
-                    <h2 style={{ margin: '0 0 30px 0', fontWeight: '400' }}>You are not alone. Immediate support is available.</h2>
+                    <AlertTriangle size={48} color="white" style={{ marginBottom: '10px', flexShrink: 0 }} />
+                    <h1 style={{ fontSize: '2rem', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: '2px', flexShrink: 0 }}>Emergency Protocol</h1>
+                    <h2 style={{ fontSize: '1.2rem', margin: '0 0 20px 0', fontWeight: '400', flexShrink: 0 }}>You are not alone. Immediate support is available.</h2>
                     
-                    <div style={{ background: 'white', color: '#b91c1c', padding: '25px', borderRadius: '16px', width: '100%', maxWidth: '450px', marginBottom: '20px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
-                        <h3 style={{ margin: '0 0 10px 0', color: '#7f1d1d' }}>National Crisis Helpline</h3>
-                        <p style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: '0' }}>Tele MANAS: 14416</p>
+                    <div style={{ background: 'white', color: '#b91c1c', padding: '20px', borderRadius: '16px', width: '100%', maxWidth: '400px', marginBottom: '15px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)', flexShrink: 0 }}>
+                        <h3 style={{ margin: '0 0 8px 0', color: '#7f1d1d', fontSize: '1.1rem' }}>National Crisis Helpline</h3>
+                        <p style={{ fontSize: '2.2rem', fontWeight: 'bold', margin: '0' }}>Tele MANAS: 14416</p>
                         <p style={{ margin: '5px 0 0 0', fontSize: '0.9rem', color: '#991b1b' }}>Toll-Free | Available 24/7</p>
                     </div>
 
                     {/* Conditional render: If user is logged in, show their assumed university counselor hook */}
                     {user && (
-                        <div style={{ background: '#fef2f2', color: '#991b1b', padding: '20px', borderRadius: '16px', width: '100%', maxWidth: '450px', border: '1px solid #fca5a5' }}>
-                            <h4 style={{ margin: '0 0 5px 0', color: '#7f1d1d' }}>Campus Counselor On-Call</h4>
-                            <p style={{ fontSize: '1.4rem', fontWeight: 'bold', margin: '0' }}>Dr. Smith: +91 98765-43210</p>
+                        <div style={{ background: '#fef2f2', color: '#991b1b', padding: '15px', borderRadius: '16px', width: '100%', maxWidth: '400px', border: '1px solid #fca5a5', flexShrink: 0 }}>
+                            <h4 style={{ margin: '0 0 5px 0', color: '#7f1d1d', fontSize: '1rem' }}>Campus Counselor On-Call</h4>
+                            <p style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: '0' }}>Dr. Smith: +91 98765-43210</p>
                             <p style={{ margin: '5px 0 0 0', fontSize: '0.85rem' }}>An anonymous intervention ping has been logged.</p>
                         </div>
                     )}
 
                     <button 
                         onClick={() => setShowSos(false)} 
-                        style={{ marginTop: '30px', background: 'transparent', border: '2px solid rgba(255,255,255,0.5)', color: 'white', padding: '12px 30px', borderRadius: '25px', cursor: 'pointer', fontWeight: 'bold', transition: 'all 0.3s' }}
+                        style={{ marginTop: '20px', background: 'transparent', border: '2px solid rgba(255,255,255,0.5)', color: 'white', padding: '10px 24px', borderRadius: '25px', cursor: 'pointer', fontWeight: 'bold', transition: 'all 0.3s', flexShrink: 0 }}
                         onMouseOver={(e) => { e.target.style.background = 'white'; e.target.style.color = '#ef4444'; }}
                         onMouseOut={(e) => { e.target.style.background = 'transparent'; e.target.style.color = 'white'; }}
                     >
