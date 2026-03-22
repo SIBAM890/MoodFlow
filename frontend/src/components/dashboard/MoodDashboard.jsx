@@ -81,23 +81,29 @@ function MoodDashboard() {
             {/* Dynamic Header Section */}
             <header className="greeting" style={{ 
                 display: 'flex', 
+                flexDirection: 'row',
+                flexWrap: 'wrap',
                 justifyContent: 'space-between', 
-                alignItems: 'flex-end', 
-                marginBottom: '30px' 
+                alignItems: 'center', 
+                gap: '20px',
+                marginBottom: '30px',
+                marginTop: '10px' // Add clearance from the top nav
             }}>
-                <div>
-                    <h1 style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: 0 }}>
+                <div style={{ flex: '1 1 min-content' }}>
+                    <h1 style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: 0, fontSize: '1.8rem', color: 'var(--text-primary)' }}>
                         <Hand size={32} color="#4F46E5" />
-                        {activeNav === 'questionnaire' ? 'Digital Mindset Analysis' : 
+                        {activeNav === 'questionnaire' ? 'Clinical Assessment' : 
                          activeNav === 'chat' ? 'Mood Flow AI Companion' : 
                          `Good Day, ${user?.name || 'Spandan'}`}
                     </h1>
                     <p style={{ margin: '8px 0 0 0', color: 'var(--text-secondary)' }}>
-                        {activeNav === 'dashboard' ? 'Track your digital habits to improve mental clarity.' : 'Reflecting on your digital intent.'}
+                        {activeNav === 'dashboard' ? 'Track your digital habits to improve mental clarity.' : 
+                         activeNav === 'chat' ? 'Reflecting on your digital intent.' :
+                         'Secure clinical evaluation matrix.'}
                     </p>
                 </div>
 
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
                     {/* Wellness Report Download Button */}
                     <button 
                         onClick={() => generateWellnessReport(user)}
@@ -105,10 +111,11 @@ function MoodDashboard() {
                             display: 'flex', alignItems: 'center', gap: '8px',
                             background: 'white', color: 'var(--text-primary)',
                             padding: '10px 20px', borderRadius: '25px',
-                            border: '1px solid var(--border-medium)', cursor: 'pointer', fontWeight: '600', transition: 'all 0.3s'
+                            border: '1px solid #cbd5e1', cursor: 'pointer', fontWeight: '600', transition: 'all 0.3s',
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
                         }}
                     >
-                        <FileDown size={18} color="var(--indigo-600)" />
+                        <FileDown size={18} color="#4F46E5" />
                         Clinical Report
                     </button>
 

@@ -74,14 +74,17 @@ function ChatAssistant() {
 
     return (
         <div className="chat-container slide-up" style={{
-            height: 'calc(100vh - 250px)', 
+            height: 'calc(100vh - 300px)', 
+            minHeight: '500px',
             display: 'flex',
             flexDirection: 'column',
-            background: 'var(--bg-warm)',
+            background: 'white',
             borderRadius: '24px',
             overflow: 'hidden',
-            boxShadow: 'var(--shadow-md)',
-            margin: '0 10px'
+            boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+            border: '1px solid #e2e8f0',
+            margin: '0 auto',
+            width: '100%'
         }}>
 
             {/* Header Area */}
