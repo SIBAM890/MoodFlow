@@ -16,6 +16,8 @@ const moodOptions = [
 ];
 
 import VoiceRecorder from '../common/VoiceRecorder';
+import VideoScanner from '../common/VideoScanner'; // ADDED NEW IMPORT
+import { Camera } from 'lucide-react';
 
 function QuickCheckin({ onMoodLogged }) {
     const [selectedMood, setSelectedMood] = useState(null);
@@ -24,6 +26,7 @@ function QuickCheckin({ onMoodLogged }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
     const [showVoiceRecorder, setShowVoiceRecorder] = useState(false);
+    const [showVideoScanner, setShowVideoScanner] = useState(false); // ADDED
     const textareaRef = useRef(null);
 
     useEffect(() => {
@@ -38,12 +41,19 @@ function QuickCheckin({ onMoodLogged }) {
     };
 
     const handleVoiceAnalysis = (data) => {
-        // Auto-expand
         setIsExpanded(true);
-        // Append transcript and insight to note
         const voiceNote = `${data.transcript}\n\n[Voice Signal: ${data.insight}]`;
         setNote(prev => prev ? `${prev}\n\n${voiceNote}` : voiceNote);
         setShowVoiceRecorder(false);
+    };
+
+    const handleVideoAnalysis = (data) => {
+        setIsExpanded(true);
+        // Automatically select the mood detected by the AI camera
+        setSelectedMood(data.mood);
+        const videoNote = `[Video Sentiment Analytics]: AI visual screening completed. \n${data.insight}`;
+        setNote(prev => prev ? `${prev}\n\n${videoNote}` : videoNote);
+        setShowVideoScanner(false);
     };
 
     const handleSubmit = async () => {
@@ -80,28 +90,36 @@ function QuickCheckin({ onMoodLogged }) {
         <section className="card checkin-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                 <h2 className="checkin-question" style={{ margin: 0 }}>How are you feeling right now?</h2>
-                <button
-                    onClick={() => setShowVoiceRecorder(!showVoiceRecorder)}
-                    className="icon-btn"
-                    title="Log with Voice"
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        fontSize: '1.5rem',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        borderRadius: '50%',
-                        transition: 'background 0.2s'
-                    }}
-                >
-                    <Mic size={24} />
-                </button>
+                <div style={{ display: 'flex', gap: '5px' }}>
+                    <button
+                        onClick={() => { setShowVoiceRecorder(!showVoiceRecorder); setShowVideoScanner(false); }}
+                        className="icon-btn"
+                        title="Log with Voice"
+                        style={{ background: showVoiceRecorder ? '#e2e8f0' : 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', padding: '8px', borderRadius: '50%', transition: 'background 0.2s', color: showVoiceRecorder ? '#2563eb' : '#64748b' }}
+                    >
+                        <Mic size={24} />
+                    </button>
+                    <button
+                        onClick={() => { setShowVideoScanner(!showVideoScanner); setShowVoiceRecorder(false); }}
+                        className="icon-btn"
+                        title="AI Video Analysis"
+                        style={{ background: showVideoScanner ? '#e2e8f0' : 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', padding: '8px', borderRadius: '50%', transition: 'background 0.2s', color: showVideoScanner ? '#3b82f6' : '#64748b' }}
+                    >
+                        <Camera size={24} />
+                    </button>
+                </div>
             </div>
 
             {showVoiceRecorder && (
                 <div style={{ marginBottom: '20px', padding: '15px', background: 'var(--bg-cream)', borderRadius: '12px', border: '1px solid var(--sage-soft)' }}>
                     <h4 style={{ margin: '0 0 10px 0', fontSize: '0.9rem', color: 'var(--sage)' }}>Record a short voice note (30s)</h4>
                     <VoiceRecorder onAnalysisComplete={handleVoiceAnalysis} />
+                </div>
+            )}
+
+            {showVideoScanner && (
+                <div style={{ marginBottom: '20px' }}>
+                    <VideoScanner onAnalysisComplete={handleVideoAnalysis} />
                 </div>
             )}
 
